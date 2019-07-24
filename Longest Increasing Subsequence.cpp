@@ -1,5 +1,5 @@
 //2019年7月24日
-//leetcode第300题 最长上升子序列
+//leetcode第300题 https://leetcode-cn.com/problems/longest-increasing-subsequence/
 
 //O(n2)解法   简单的动态规划  双重循环
 class Solution {
