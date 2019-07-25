@@ -4,82 +4,57 @@
 class Trie {
 public:
     /** Initialize your data structure here. */
-    int num = 26;
-   struct TreeNode{
-       TreeNode* child[26];
-       int count;
-       int is_end = false;
-   };
-    TreeNode *tree = new TreeNode();
+    struct TreeNode{
+        TreeNode* child[26];    //  前缀树 在本题中元素仅包含 a-z 26个小写字母
+        int end = false;        //  到当前节点是否是一个完整的单词
+    };
+    
+    TreeNode *tr;
     
     Trie() {
+        tr = new TreeNode();
     }
     
     TreeNode* create(){
-        TreeNode *node = new TreeNode();
-        for(int i = 0; i < num; ++i)
-            node->child[i] = NULL;
-        return node;
+        TreeNode* tree = new TreeNode();
+        for(int i = 0; i < 26; ++i)
+            tree->child[i] = nullptr;
+        return tree;
     }
     
     /** Inserts a word into the trie. */
     void insert(string word) {
-        TreeNode *tmp = tree;
-        for(int i = 0; i < word.length(); ++i){
-            char ch = word[i];
-            
-            if(tmp->child[ch - 'a'] == NULL){
-                TreeNode *node = create();
-                tmp->child[ch - 'a'] = node;
-            }
-            tmp = tmp->child[ch - 'a'];
-            tmp->count += 1;
-            
-            if(i == word.length() - 1)
-                tmp->is_end = true;
+        TreeNode* t = tr;
+        for(auto ch: word){
+            if(t->child[ch - 'a'] == nullptr)
+                t->child[ch - 'a'] = create();
+            t = t->child[ch - 'a'];
         }
+        t->end = true;
     }
     
     /** Returns if the word is in the trie. */
     bool search(string word) {
-        TreeNode *tmp = tree;
-        for(int i = 0; i < word.length(); ++i){
-            char ch = word[i];
-            
-            if(tmp->child[ch - 'a'] == NULL)
+        TreeNode* t = tr;
+        for(auto ch: word){
+            if(t->child[ch - 'a'] == nullptr)
                 return false;
-            if(i == word.length() - 1)
-                if(!tmp->child[ch - 'a']->is_end)
-                    return false;
-            tmp = tmp->child[ch - 'a'];
+            t = t->child[ch - 'a'];
         }
-        return true;
+        return t->end;
     }
-    
-    // void dfs(TreeNode *tree){
-    //     TreeNode *tmp = tree;
-    //     for(int i = 0; i < 26; ++i){
-    //         if (tmp->child[i] != NULL){
-    //             char c = '0' + (i + 1);
-    //             cout << c << " ";
-    //             dfs(tree->child[i]);
-    //         }
-    //     }
-    // }
     
     /** Returns if there is any word in the trie that starts with the given prefix. */
     bool startsWith(string prefix) {
-        TreeNode *tmp = tree;
-        for(int i = 0; i < prefix.length(); ++i){
-            char ch = prefix[i];
-            if(tmp->child[ch - 'a'] == NULL)
+        TreeNode* t = tr;
+        for(auto ch: prefix){
+            if(t->child[ch - 'a'] == nullptr)
                 return false;
-            tmp = tmp->child[ch - 'a'];
+            t = t->child[ch - 'a'];
         }
         return true;
     }
 };
-
 
 /**
  * Your Trie object will be instantiated and called as such:
