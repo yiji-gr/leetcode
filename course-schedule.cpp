@@ -1,5 +1,5 @@
 # 2019年8月2日
-# leetcode第207题   https://leetcode-cn.com/problems/course-schedule/
+# leetcode 第207题   https://leetcode-cn.com/problems/course-schedule/
 
 class Solution {
 public:
