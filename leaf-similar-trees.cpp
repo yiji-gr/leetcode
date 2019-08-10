@@ -26,11 +26,6 @@ public:
         get_leaf(root1, leafs1);
         get_leaf(root2, leafs2);
         
-        if(leafs1.size() != leafs2.size())
-            return false;
-        for(int i = 0; i < leafs1.size(); ++i)
-            if(leafs1[i] != leafs2[i])
-                return false;
-        return true;
+        return leafs1 == leafs2;
     }
 };
