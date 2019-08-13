@@ -19,8 +19,8 @@ public:
 	}
 
 	bool makesquare(vector<int>& nums) {
-    if(nums.size() < 4)
-      return false;
+		if(nums.size() < 4)
+      		return false;
 		long long sum = 0;
 		for (auto it : nums)
 			sum += it;
