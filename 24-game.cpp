@@ -1,6 +1,76 @@
 //  2019年8月13日 
 //  leetcode第679题 https://leetcode-cn.com/problems/24-game/
 
+//---------更简练的深搜-------------  但是忽略了一种情况 (a+b)*(c-d) (a+b)/(c-d) 两边加减中间乘除的情况
+string ops = "+-/*";
+string st;
+const float eps = 0.001;
+
+bool dfs(vector<int> nums, vector<int> &visit, float cur, int cnt, string &s) {
+	if (cnt == 3) {
+		return abs(cur - 24) < eps;
+	}
+	for (int i = 0; i < nums.size(); ++i) {
+		if (!visit[i]) {
+			visit[i] = 1;
+			for (int j = 0; j < ops.length(); ++j) {
+				if (ops[j] == '+') {
+					s = '(' + s + '+' + static_cast<char>(nums[i] + '0') + ')';
+					if (dfs(nums, visit, cur + nums[i], cnt + 1, s))
+						return true;
+					s = s.substr(1);	s.pop_back(); s.pop_back(); s.pop_back();
+				}
+				else if (ops[j] == '-') {
+					s = '(' + s + '-' + static_cast<char>(nums[i] + '0') + ')';
+					if (dfs(nums, visit, cur - nums[i], cnt + 1, s))
+						return true;
+					s = s.substr(1);  s.pop_back();	s.pop_back();	s.pop_back();
+					
+					s.insert(0, 1, '('); s.insert(0, 1, '-');	s.insert(0, 1, (nums[i] + '0')); s.push_back(')');
+					if (dfs(nums, visit, nums[i] - cur, cnt + 1, s))
+						return true;
+					s = s.substr(3);	s.pop_back();
+				}
+				else if (ops[j] == '*') {
+					s = '(' + s + '*' + static_cast<char>(nums[i] + '0') + ')';
+					if (dfs(nums, visit, nums[i] * cur, cnt + 1, s))
+						return true;
+					s = s.substr(1);  s.pop_back();	s.pop_back(); s.pop_back();
+				}
+				else if (ops[j] == '/') {
+					s = '(' + s + '/' + static_cast<char>(nums[i] + '0') + ')';
+					if (nums[i] != 0 && dfs(nums, visit, cur / nums[i], cnt + 1, s))
+						return true;
+					s = s.substr(1); s.pop_back();	s.pop_back();	s.pop_back();
+					
+					s.insert(0, 1, '/'); s.insert(0, 1, (nums[i] + '0')); s.insert(0, 1, '(');   s.push_back(')');
+					if (cur != 0 && dfs(nums, visit, nums[i] / cur, cnt + 1, s))
+						return true;
+					s = s.substr(3);	s.pop_back();
+				}
+				else
+					throw "no this op";
+			}
+			visit[i] = 0;
+		}
+	}
+	return false;
+}
+
+bool f(vector<int> nums) {
+	for (int i = 0; i < 4; ++i) {
+		vector<int> visit(4, 0);
+		visit[i] = 1;
+		st += (nums[i] + '0');
+		if (dfs(nums, visit, nums[i] * 1.f, 0, st)) {
+			cout << st << endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+//直接枚举出所有可能的字符串表达式 然后计算值  时空复杂度过高
 class Solution {
 public:
 	string ops = "+-*/";
