@@ -1,7 +1,7 @@
 //  2019年8月13日 
 //  leetcode第679题 https://leetcode-cn.com/problems/24-game/
 
-//---------更简练的深搜-------------  但是忽略了一种情况 (a+b)*(c-d) (a+b)/(c-d) 两边加减中间乘除的情况
+//---------更简练的深搜-------------  但是忽略了一种情况 (a+b)*(c-d) (a+b)/(c-d) 两边加减中间乘除的情况 没有ac
 string ops = "+-/*";
 string st;
 const float eps = 0.001;
@@ -70,7 +70,7 @@ bool f(vector<int> nums) {
 	return false;
 }
 
-//直接枚举出所有可能的字符串表达式 然后计算值  时空复杂度过高
+//直接枚举出所有可能的字符串表达式 然后计算值  时空复杂度过高 ac
 class Solution {
 public:
 	string ops = "+-*/";
