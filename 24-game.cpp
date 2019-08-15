@@ -25,7 +25,6 @@ bool dfs(vector<int> nums, vector<int> &visit, float cur, int cnt, string &s) {
 					if (dfs(nums, visit, cur - nums[i], cnt + 1, s))
 						return true;
 					s = s.substr(1);  s.pop_back();	s.pop_back();	s.pop_back();
-					
 					s.insert(0, 1, '('); s.insert(0, 1, '-');	s.insert(0, 1, (nums[i] + '0')); s.push_back(')');
 					if (dfs(nums, visit, nums[i] - cur, cnt + 1, s))
 						return true;
@@ -42,7 +41,6 @@ bool dfs(vector<int> nums, vector<int> &visit, float cur, int cnt, string &s) {
 					if (nums[i] != 0 && dfs(nums, visit, cur / nums[i], cnt + 1, s))
 						return true;
 					s = s.substr(1); s.pop_back();	s.pop_back();	s.pop_back();
-					
 					s.insert(0, 1, '/'); s.insert(0, 1, (nums[i] + '0')); s.insert(0, 1, '(');   s.push_back(')');
 					if (cur != 0 && dfs(nums, visit, nums[i] / cur, cnt + 1, s))
 						return true;
