@@ -1,4 +1,4 @@
-//  2019年7月25日 
+//  2019年7月25日
 //  leetcode第208题 https://leetcode-cn.com/problems/implement-trie-prefix-tree/
 
 class Trie {
@@ -8,20 +8,19 @@ public:
         TreeNode* child[26];    //  前缀树 在本题中元素仅包含 a-z 26个小写字母
         int end = false;        //  到当前节点是否是一个完整的单词
     };
-    
     TreeNode *tr;
-    
+
     Trie() {
         tr = new TreeNode();
     }
-    
+
     TreeNode* create(){
         TreeNode* tree = new TreeNode();
         for(int i = 0; i < 26; ++i)
             tree->child[i] = nullptr;
         return tree;
     }
-    
+
     /** Inserts a word into the trie. */
     void insert(string word) {
         TreeNode* t = tr;
@@ -32,7 +31,7 @@ public:
         }
         t->end = true;
     }
-    
+
     /** Returns if the word is in the trie. */
     bool search(string word) {
         TreeNode* t = tr;
@@ -43,7 +42,7 @@ public:
         }
         return t->end;
     }
-    
+
     /** Returns if there is any word in the trie that starts with the given prefix. */
     bool startsWith(string prefix) {
         TreeNode* t = tr;

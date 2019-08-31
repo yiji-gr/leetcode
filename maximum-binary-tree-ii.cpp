@@ -20,7 +20,7 @@ public:
             cur->left = root;
             return cur;
         }
-        
+
         TreeNode* tmp = root;
         while(tmp->right != nullptr && tmp->right->val > val){
             tmp = tmp->right;
